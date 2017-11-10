@@ -7,4 +7,5 @@ end
 require_relative 'app/controllers/application_controller.rb'
 
 run ApplicationController
-use UsersController 
+use UsersController
+use MeetupsController 
