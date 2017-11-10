@@ -34,4 +34,16 @@ class MeetupsController < ApplicationController
         end
     end 
 
+    ### SHOW MEETUP ###
+
+    get '/meetups/:id' do
+        if Helpers.is_logged_in?(session)
+            @meetup = Meetup.find(params[:id])
+            erb :'/meetups/show'
+        else
+            flash[:notice] = "You have to be logged in to do that!"
+            redirect '/login'
+        end
+    end
+
 end
