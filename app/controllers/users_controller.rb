@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
     
+    ### SIGNUP ###
+
     get '/signup' do
         erb :'users/signup' 
     end 
@@ -16,18 +18,41 @@ class UsersController < ApplicationController
         end 
     end
 
+    ### LOGIN ###
+
+    get '/login' do
+        if session[:id]
+            redirect '/meetups'
+        else
+            erb :'users/login'
+        end
+    end  
+
+    post '/login' do
+        @user = User.find_by(name: params[:name])
+        if @user && @user.authenticate(params[:password])
+            session[:id] = @user[:id]
+            redirect '/meetups'
+        else
+            redirect '/'
+        end 
+    end 
+
+    ### LOGOUT ###
+
     get '/logout' do
         session.clear
         redirect '/'
     end
+
+    ### MEETUPS INDEX ###
     
     get '/meetups' do
-        #binding.pry 
         if session[:id]
             @user = Helpers.current_user(session)
             erb :'/meetups/index'
         else
-            redirect :'/'
+            redirect '/'
         end
     end 
 end 
