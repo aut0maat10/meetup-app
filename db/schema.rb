@@ -11,17 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109184249) do
+ActiveRecord::Schema.define(version: 20171111011907) do
 
   create_table "meetups", force: :cascade do |t|
     t.string "name"
     t.text   "description"
     t.string "location"
+    t.string "time"
   end
 
   create_table "rsvps", force: :cascade do |t|
     t.integer "user_id"
     t.integer "meetup_id"
+    t.integer "creator_id"
   end
 
   create_table "users", force: :cascade do |t|
