@@ -28,15 +28,17 @@ class MeetupsController < ApplicationController
             redirect '/meetups/create'
         else
             @current_user = User.find_by(session[:id])
-            binding.pry
+            #binding.pry
             @meetup = Meetup.create(params)
             Rsvp.create(user_id: @current_user.id, meetup_id: @meetup.id)
+            redirect "meetups/#{@meetup.id}"
         end
     end 
 
     ### SHOW MEETUP ###
 
     get '/meetups/:id' do
+        #binding.pry
         if Helpers.is_logged_in?(session)
             @meetup = Meetup.find(params[:id])
             erb :'/meetups/show'
@@ -45,5 +47,21 @@ class MeetupsController < ApplicationController
             redirect '/login'
         end
     end
+
+    post '/meetups/:id' do
+        #binding.pry
+        if Helpers.is_logged_in?(session) # => true 
+            @current_user = User.find(session[:id]) # => leif
+            @meetup = Meetup.find(params[:id])
+            if Rsvp.exists?(user_id: @current_user.id, meetup_id: @meetup.id) == false
+                Rsvp.create(user_id: @current_user.id, meetup_id: @meetup.id)
+                flash[:notice] = "You just joined this meetup!"
+                redirect "/meetups/#{@meetup.id}"
+            else
+                flash[:notice] = "You already joined this meetup!"
+                redirect '/meetups'
+            end 
+        end
+    end 
 
 end

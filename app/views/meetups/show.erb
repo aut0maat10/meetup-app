@@ -12,3 +12,7 @@
 <p><%= @meetup.location%></p>
     <br>
 <h4><label>Attendees:</label></h4><br>
+
+<form action="/meetups/<%= @meetup.id %>" method="post">
+    <input type="submit" value="Join Meetup">
+</form>
