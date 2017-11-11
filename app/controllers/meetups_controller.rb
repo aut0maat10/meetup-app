@@ -74,6 +74,29 @@ class MeetupsController < ApplicationController
     end 
 
     get '/meetups/:id/edit' do
+        if session[:id]
+            @meetup = Meetup.find(params[:id])
+            erb :'/meetups/edit'
+        else
+            redirect '/login'
+        end 
     end 
+
+    patch '/meetups/:id' do
+         
+        if params[:name].empty? || params[:description].empty? || params[:location].empty? || params[:time].empty?
+            flash[:notice] = "Please fill in all fields!"
+            redirect "/meetups/#{params[:id]}/edit"
+        else
+            @meetup = Meetup.find_by_id(params[:id])
+            @meetup.name = params[:name]
+            @meetup.description = params[:description]
+            @meetup.location = params[:location]
+            @meetup.time = params[:time]
+            @meetup.save
+            redirect "meetups/#{@meetup.id}"
+            
+        end
+    end
 
 end
