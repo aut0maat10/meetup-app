@@ -74,11 +74,22 @@ class MeetupsController < ApplicationController
     end 
 
     get '/meetups/:id/edit' do
-        if session[:id]
-            @meetup = Meetup.find(params[:id])
+        
+        # if session[:id]
+        @current_user = Helpers.current_user(session)
+        @meetup = Meetup.find(params[:id])
+        @rsvp = Rsvp.find_by(meetup_id: @meetup.id)
+        # @rsvp.creator_id #=> 10
+        # @rsvp.user 
+        @meetup_creator = User.find_by(id: @rsvp.creator_id)
+        # @meetup = Meetup.find(params[:id])
+        # erb :'/meetups/edit'
+        #binding.pry
+        if @meetup_creator.id == @current_user.id
             erb :'/meetups/edit'
         else
-            redirect '/login'
+            flash[:notice] = "You can only edit meetups you created!"
+            redirect '/my-meetups'
         end 
     end 
 
