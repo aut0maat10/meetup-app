@@ -3,27 +3,22 @@
 
 <h1><label>Meetup:</label></h1><br>
 <h2><%= @meetup.name%></h2>
-
-<h3><%= @meetup.time%></h3>
-    <br>
-<h4><label>Description:</label></h4><br>
+<br>
+<h4><%= @meetup.time%></h4>
+<br>
+<h5><label>Description:</label></h5>
 <p><%= @meetup.description%></p>
-    <br>
-<h4><label>Location:</label></h4><br>
+    
+<h5><label>Location:</label></h5>
 <p><%= @meetup.location%></p>
-    <br>
-<h4><label>Attendees:</label></h4><br>
+    
+<h5><label>RSVPs:</label></h5>
 
 <% @attendees.each do |attendee| %>
     <p><%= attendee.name%><p>
 <% end %>
-<br>
-
 <form action="/meetups/<%= @meetup.id %>" method="post">
-    <input type="submit" value="Join Meetup">
+    <button class="btn btn-success" type="submit">Join Meetup</button>
 </form>
-<br><br>
-<a href="/my-meetups"><< Back to My Meetups</a>
-<br><br>
-<a href="/logout">Logout</a>
+<br>
 <br><br>

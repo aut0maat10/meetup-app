@@ -1,5 +1,6 @@
 class MeetupsController < ApplicationController
-
+    include ApplicationHelper
+    
     ### MEETUPS INDEX ###
     
     get '/meetups' do
@@ -24,7 +25,7 @@ class MeetupsController < ApplicationController
     
     post '/meetups' do
         if params[:name].empty? || params[:description].empty? || params[:location].empty? || params[:time].empty?
-            flash[:notice] = "Please fill in all fields!"
+            flash[:error] = "Please fill in all fields!"
             redirect '/meetups/create'
         else
             @current_user = User.find(session[:id])
@@ -68,11 +69,11 @@ class MeetupsController < ApplicationController
             @meetup = Meetup.find(params[:id])
             if Rsvp.exists?(user_id: @current_user.id, meetup_id: @meetup.id) == false
                 Rsvp.create(user_id: @current_user.id, meetup_id: @meetup.id)
-                flash[:notice] = "You just joined this meetup!"
+                flash[:success] = "You just joined this meetup!"
                 redirect "/meetups/#{@meetup.id}"
             else
                 flash[:notice] = "You already joined this meetup!"
-                redirect '/meetups'
+                redirect "meetups/#{@meetup.id}"
             end 
         end
     end 
@@ -87,7 +88,7 @@ class MeetupsController < ApplicationController
         if @meetup_creator.id == @current_user.id
             erb :'/meetups/edit'
         else
-            flash[:notice] = "You can only edit meetups you created!"
+            flash[:error] = "You can only edit meetups you created!"
             redirect '/my-meetups'
         end 
     end 
@@ -95,7 +96,7 @@ class MeetupsController < ApplicationController
     patch '/meetups/:id' do
          
         if params[:name].empty? || params[:description].empty? || params[:location].empty? || params[:time].empty?
-            flash[:notice] = "Please fill in all fields!"
+            flash[:error] = "Please fill in all fields!"
             redirect "/meetups/#{params[:id]}/edit"
         else
             @meetup = Meetup.find_by_id(params[:id])

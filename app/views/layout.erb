@@ -10,19 +10,36 @@
   <title>MeetupApp</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link rel="stylesheet" href="/stylesheets/main.css" />
+  
+  <link rel="stylesheet" href="/stylesheets/main.css"/>
+  <link rel="stylesheet" href="/css/bootstrap.css" /> 
 </head>
 <body>
-
-  <div class="wrapper">
-      <% flash.keys.each do |type| %>
-        <div data-alert class="flash <%= type %> alert-box radius">
-          <%= flash[type] %>
-          <a href="#" class="close">&times;</a>
-        </div>
-      <% end %>
+<div class="wrapper bg-light">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">MeetApp</a>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="/meetups">Home<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link active" href="/my-meetups">My Meetups<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link active" href="/meetups/create">Create Meetup<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link active" href="/login">Login<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link active" href="/logout">Logout<span class="sr-only">(current)</span></a>
       
+    </div>
+  </div>
+</nav>
+<br><br>
+      
+  <% flash.each do |key, value| %>
+      <div class="<%= flash_class(key) %>">
+            <%= value %>
+      </div>
+  <% end %>
+    
       <%= yield %>
 
     <footer class="branding">
@@ -31,6 +48,7 @@
   </div>
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <!--[if lt IE 7]>
     <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
     <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>

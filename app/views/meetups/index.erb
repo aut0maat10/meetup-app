@@ -1,20 +1,14 @@
 <h1>Welcome, <%= @user.name %>!</h1>
-    <br>
-<a href="/meetups/create">Create Meetup</a>
-    <br><br>
-<a href="/my-meetups">My Meetups</a>
-    <br><br>
-<a href="/logout">Logout</a>
-    <br><br><br>
-
+<br>
+<button class="btn btn-success" type="submit">Create Meetup</button>
+<br><br>
+<br>
 <h2>All Meetups</h2>
-    <br><br>
+    <br>
 <% @meetups.each do |meetup|%>
     <h3><a href="/meetups/<%=meetup.id%>"><%= meetup.name %> </a><br></h3>
-    <br>
-    <h4><%= meetup.time %></h4>
-    <br>
+    <h5><%= meetup.time %></h5>
     <p><%= meetup.description%></p>
-    <h4><%= meetup.location%></h4>
-    <br><br>
+    <h5><%= meetup.location%></h5>
+    <hr/>
 <% end %>

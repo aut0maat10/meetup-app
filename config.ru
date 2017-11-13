@@ -5,6 +5,7 @@ if ActiveRecord::Migrator.needs_migration?
 end
 
 require_relative 'app/controllers/application_controller.rb'
+
 use Rack::MethodOverride
 
 run ApplicationController
