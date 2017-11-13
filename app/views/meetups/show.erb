@@ -14,6 +14,11 @@
     <br>
 <h4><label>Attendees:</label></h4><br>
 
+<% @attendees.each do |attendee| %>
+    <p><%= attendee.name%><p>
+<% end %>
+<br>
+
 <form action="/meetups/<%= @meetup.id %>" method="post">
     <input type="submit" value="Join Meetup">
 </form>

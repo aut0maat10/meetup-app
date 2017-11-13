@@ -30,6 +30,7 @@ class MeetupsController < ApplicationController
             @current_user = User.find(session[:id])
             @meetup = Meetup.create(params)
             Rsvp.create(user_id: @current_user.id, meetup_id: @meetup.id, creator_id: @current_user.id)
+            
             redirect "meetups/#{@meetup.id}"
         end
     end 
@@ -46,10 +47,13 @@ class MeetupsController < ApplicationController
         erb :'/meetups/my_meetups'
     end 
 
+    ### MEETUP BY ID ###
     get '/meetups/:id' do
-        #binding.pry
+        
         if Helpers.is_logged_in?(session)
             @meetup = Meetup.find(params[:id])
+            rsvps = Rsvp.where(meetup_id: @meetup.id)
+            @attendees = rsvps.collect {|rsvp| rsvp.user(user_id: rsvp.user_id)}
             erb :'/meetups/show'
         else
             flash[:notice] = "You have to be logged in to do that!"
@@ -73,18 +77,13 @@ class MeetupsController < ApplicationController
         end
     end 
 
+    ### EDIT MEETUP ### 
+
     get '/meetups/:id/edit' do
-        
-        # if session[:id]
         @current_user = Helpers.current_user(session)
         @meetup = Meetup.find(params[:id])
         @rsvp = Rsvp.find_by(meetup_id: @meetup.id)
-        # @rsvp.creator_id #=> 10
-        # @rsvp.user 
         @meetup_creator = User.find_by(id: @rsvp.creator_id)
-        # @meetup = Meetup.find(params[:id])
-        # erb :'/meetups/edit'
-        #binding.pry
         if @meetup_creator.id == @current_user.id
             erb :'/meetups/edit'
         else

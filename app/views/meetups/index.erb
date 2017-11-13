@@ -12,8 +12,9 @@
 <% @meetups.each do |meetup|%>
     <h3><a href="/meetups/<%=meetup.id%>"><%= meetup.name %> </a><br></h3>
     <br>
-    <p><%= meetup.description%></p>
+    <h4><%= meetup.time %></h4>
     <br>
-    <p><%= meetup.location%></p>
+    <p><%= meetup.description%></p>
+    <h4><%= meetup.location%></h4>
     <br><br>
 <% end %>
