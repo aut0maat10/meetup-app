@@ -2,7 +2,6 @@
 <% if Helpers.is_logged_in?(session)%>
     <h1>My Meetups</h1>
     <hr/>
-       
     <% @meetups.each do |meetup|%>
         <h3><a href="/meetups/<%=meetup.id%>"><%= meetup.name %> </a></h3>
         
@@ -13,13 +12,14 @@
         <hr/>
         
     <% end %>
-     <button class="btn btn-success" type="submit"> Create Meetup</button>
+    
+
+     <a class="btn btn-success" href="/meetups/create" role="button">Create Meetup</a>
         <hr/>
     
     <h1>My RSVPs</h1>
     <hr/>
         <br>
-        
     <% @my_meetups.each do |meetup|%>
         
         <h3><a href="/meetups/<%=meetup.id%>"><%= meetup.name %> </a></h3>
@@ -28,5 +28,6 @@
         <h5><%= meetup.location%></h5>
         <hr/>
     <% end %>
+    
 <% end %>
     <br><br>

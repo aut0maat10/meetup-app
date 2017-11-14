@@ -25,13 +25,13 @@ class MeetupsController < ApplicationController
     
     post '/meetups' do
         if params[:name].empty? || params[:description].empty? || params[:location].empty? || params[:time].empty?
-            flash[:error] = "Please fill in all fields!"
+            flash[:notice] = "Please fill in all fields!"
             redirect '/meetups/create'
         else
             @current_user = User.find(session[:id])
             @meetup = Meetup.create(params)
             Rsvp.create(user_id: @current_user.id, meetup_id: @meetup.id, creator_id: @current_user.id)
-            
+            flash[:success] = "Successfully created Meetup!"
             redirect "meetups/#{@meetup.id}"
         end
     end 
@@ -39,6 +39,7 @@ class MeetupsController < ApplicationController
     ### SHOW MEETUP ###
 
     get '/my-meetups' do
+        #binding.pry 
         @current_user = User.find(session[:id])
         @rsvp_arr = @current_user.rsvps.where(creator_id: @current_user.id)
         @meetups = @rsvp_arr.collect {|rsvp| rsvp.meetup}
@@ -88,7 +89,7 @@ class MeetupsController < ApplicationController
         if @meetup_creator.id == @current_user.id
             erb :'/meetups/edit'
         else
-            flash[:error] = "You can only edit meetups you created!"
+            flash[:notice] = "You can only edit meetups you created!"
             redirect '/my-meetups'
         end 
     end 
@@ -96,7 +97,7 @@ class MeetupsController < ApplicationController
     patch '/meetups/:id' do
          
         if params[:name].empty? || params[:description].empty? || params[:location].empty? || params[:time].empty?
-            flash[:error] = "Please fill in all fields!"
+            flash[:notice] = "Please fill in all fields!"
             redirect "/meetups/#{params[:id]}/edit"
         else
             @meetup = Meetup.find_by_id(params[:id])
@@ -109,5 +110,14 @@ class MeetupsController < ApplicationController
             
         end
     end
+
+    delete '/meetups/:id/delete' do
+        
+        @meetup = Meetup.find_by_id(params[:id])
+        @meetup.delete
+        Rsvp.where(meetup_id: @meetup.id).destroy_all
+        flash[:success] = "Successfully deleted Meetup!"
+        redirect '/my-meetups'
+    end 
 
 end
