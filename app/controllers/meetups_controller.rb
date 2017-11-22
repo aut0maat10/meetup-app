@@ -4,9 +4,8 @@ class MeetupsController < ApplicationController
     ### MEETUPS INDEX ###
     
     get '/meetups' do
-        @meetups = Meetup.all 
-        if session[:id]
-            @user = Helpers.current_user(session)
+        if is_logged_in?
+            @meetups = Meetup.all 
             erb :'/meetups/index'
         else
             redirect '/'
@@ -16,7 +15,7 @@ class MeetupsController < ApplicationController
     ### CREATE MEETUP ###
 
     get '/meetups/create' do
-        if Helpers.is_logged_in?(session) 
+        if is_logged_in?
             erb :'/meetups/create'
         else
             redirect '/login'
@@ -24,16 +23,19 @@ class MeetupsController < ApplicationController
     end
     
     post '/meetups' do
-        if params[:name].empty? || params[:description].empty? || params[:location].empty? || params[:time].empty?
-            flash[:notice] = "Please fill in all fields!"
-            redirect '/meetups/create'
+        if is_logged_in?
+            if params[:name].empty? || params[:description].empty? || params[:location].empty? || params[:time].empty?
+                flash[:notice] = "Please fill in all fields!"
+                redirect '/meetups/create'
+            else
+                @meetup = Meetup.create(params)
+                Rsvp.create(user_id: ccurrent_user.id, meetup_id: @meetup.id, creator_id: current_user.id)
+                flash[:success] = "Successfully created Meetup!"
+                redirect "meetups/#{@meetup.id}"
+            end
         else
-            @current_user = User.find(session[:id])
-            @meetup = Meetup.create(params)
-            Rsvp.create(user_id: @current_user.id, meetup_id: @meetup.id, creator_id: @current_user.id)
-            flash[:success] = "Successfully created Meetup!"
-            redirect "meetups/#{@meetup.id}"
-        end
+            redirect '/login'
+        end 
     end 
 
     ### SHOW MEETUP ###

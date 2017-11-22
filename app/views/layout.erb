@@ -23,12 +23,15 @@
   <a class="navbar-brand" href="#">MeetApp</a>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/meetups">Home<span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link active" href="/my-meetups">My Meetups<span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link active" href="/meetups/create">Create Meetup<span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link active" href="/login">Login<span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link active" href="/logout">Logout<span class="sr-only">(current)</span></a>
-      
+      <% if is_logged_in? %>
+        <a class="nav-item nav-link active" href="/meetups">Home</a>
+        <a class="nav-item nav-link active" href="/my-meetups">My Meetups</a>
+        <a class="nav-item nav-link active" href="/meetups/create">Create Meetup</a>
+        <a class="nav-item nav-link active" href="/logout">Logout</a>
+        <% else %>
+          <a class="nav-item nav-link active" href="/signup">Signup</a>
+          <a class="nav-item nav-link active" href="/login">Login</a>
+      <% end %>
     </div>
   </div>
 </nav>
@@ -43,7 +46,7 @@
       <%= yield %>
 
     <footer class="branding">
-      <small>&copy; 2017 <strong>MeetupApp</strong></small>
+      <small>&copy; 2017 <strong>MeetApp</strong></small>
     </footer>
   </div>
 

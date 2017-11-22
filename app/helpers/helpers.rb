@@ -1,10 +1,10 @@
-class Helpers
+module Helpers
 
-    def self.current_user(session)
-        User.find_by(id: session[:id])
+    def current_user #=> user instance || nil
+        @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
     end
 
-    def self.is_logged_in?(session)
-        !!session[:id]
+    def is_logged_in?
+        !!current_user
     end
 end
