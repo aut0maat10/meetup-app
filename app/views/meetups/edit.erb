@@ -1,47 +1,45 @@
+<h1>Edit Meetup</h1>
 
-
-    <h1>Edit Meetup</h1>
-
-    <form action="/meetups/<%=@meetup.id%>" method="post"> 
-        <input id="hidden" type="hidden" name="_method" value="patch">
-            <br><br>
-        <label>Name</label><br>
-        <input type="text" name="name" value="<%= @meetup.name%>">
-            <br><br>
-        <label>Date/Time</label><br>
-        <input type="text" name="time" value="<%= @meetup.time%>">
-            <br><br>
-        <label>Description</label><br>
-        <textarea rows="4" cols="50" name="description"><%= @meetup.description%></textarea>
+<form action="/meetups/<%=@meetup.id%>" method="post"> 
+    <input id="hidden" type="hidden" name="_method" value="patch">
         <br><br>
-        <label>Location</label><br>
-        <input type="text" name="location" value="<%= @meetup.location%>">
-        <br><br>
-        <button class="btn btn-success" type="submit">Submit</button>
-    </form>
-    <br><br><br>
-
-    <h1>Delete Meetup</h1>
-
-    <form action="/meetups/<%= @meetup.id %>/delete" method="post">
-    
-    <input id="hidden" type="hidden" name="_method" value="delete">
-    <br><br>
     <label>Name</label><br>
-        <input type="text" name="name" value="<%= @meetup.name%>">
-            <br><br>
-        <label>Date/Time</label><br>
-        <input type="text" name="time" value="<%= @meetup.time%>">
-            <br><br>
-        <label>Description</label><br>
-        <textarea rows="4" cols="50" name="description"><%= @meetup.description%></textarea>
-            <br><br>
-        <label>Location</label><br>
-        <input type="text" name="location" value="<%= @meetup.location%>">
-            <br><br>
-    <button class="btn btn-danger" type="submit" value="delete">Delete</button>
-    
+    <input type="text" name="name" value="<%= @meetup.name%>">
+        <br><br>
+    <label>Date/Time</label><br>
+    <input type="text" name="time" value="<%= @meetup.time%>">
+        <br><br>
+    <label>Description</label><br>
+    <textarea rows="4" cols="50" name="description"><%= @meetup.description%></textarea>
+    <br><br>
+    <label>Location</label><br>
+    <input type="text" name="location" value="<%= @meetup.location%>">
+    <br><br>
+    <button class="btn btn-success" type="submit">Submit</button>
+</form>
+<br><br><br>
 
-    </form>
+<h1>Delete Meetup</h1>
+
+<form action="/meetups/<%= @meetup.id %>/delete" method="post">
+
+<input id="hidden" type="hidden" name="_method" value="delete">
+<br><br>
+<label>Name</label><br>
+    <input type="text" name="name" value="<%= @meetup.name%>">
+        <br><br>
+    <label>Date/Time</label><br>
+    <input type="text" name="time" value="<%= @meetup.time%>">
+        <br><br>
+    <label>Description</label><br>
+    <textarea rows="4" cols="50" name="description"><%= @meetup.description%></textarea>
+        <br><br>
+    <label>Location</label><br>
+    <input type="text" name="location" value="<%= @meetup.location%>">
+        <br><br>
+<button class="btn btn-danger" type="submit" value="delete">Delete</button>
+
+
+</form>
 
     
