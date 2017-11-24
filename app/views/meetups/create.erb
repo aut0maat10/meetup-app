@@ -1,27 +1,28 @@
-<% if Helpers.is_logged_in?(session) %>
+<% if is_logged_in? %>
 
-<h1>Create Meetup</h1>
-    
-<form action="/meetups" method="post">
-    <br>
-    <label>Meetup name:</label> 
+    <h1>Create Meetup</h1>
+        
+    <form action="/meetups" method="post">
+        
         <br>
-    <input type="text" name="name" id="name">
-        <br><br>
-    <label>Date/Time:</label>
-        <br>
-    <input type="text" name="time" id="time">
-        <br><br>
-    <label>Description:</label>
-        <br>
-    <textarea rows="4" cols="50" name="description" id="description"></textarea>
-        <br><br>
-    <label>Location:</label>
-        <br>
-    <input type="text" name="location" id="location">
-        <br><br>
+        <label>Meetup name:</label> 
+            <br>
+        <input type="text" name="name" id="name">
+            <br><br>
+        <label>Date/Time:</label>
+            <br>
+        <input type="text" name="time" id="time">
+            <br><br>
+        <label>Description:</label>
+            <br>
+        <textarea rows="4" cols="50" name="description" id="description"></textarea>
+            <br><br>
+        <label>Location:</label>
+            <br>
+        <input type="text" name="location" id="location">
+            <br><br>
 
-    <button class="btn btn-success" type="submit">Create</button>
+        <button class="btn btn-success" type="submit">Create</button>
 
     </form>
 

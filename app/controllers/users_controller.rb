@@ -7,7 +7,6 @@ class UsersController < ApplicationController
     end 
 
     post '/signup' do
-        #binding.pry 
         if !params[:name].empty? && !params[:email].empty? && !params[:password].empty? 
             @user = User.new(params)
             @user.save
@@ -28,14 +27,14 @@ class UsersController < ApplicationController
         end
     end  
 
-    post '/login' do
+    post '/login' do 
         @user = User.find_by(name: params[:name])
         if @user && @user.authenticate(params[:password])
             session[:id] = @user[:id]
             redirect '/meetups'
         else
             redirect '/'
-        end 
+        end
     end 
 
     ### LOGOUT ###
