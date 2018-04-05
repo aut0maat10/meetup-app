@@ -1,0 +1,11 @@
+body {
+  background-color: #242424; 
+  background-image: url('../images/nyc-background.jpg'); 
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.wrapper {
+  margin-top: 25px;
+  background-color:  #EEF6F7 
+}
