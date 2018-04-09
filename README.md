@@ -1,5 +1,7 @@
 This is my Sinatra Portfolio Project for Flatiron School. 
 
+![Alt text](https://i.imgur.com/k5uRE1V.png)
+
 The project is a simple CRUD app that allows a user to register, log in, view, join, edit, and delete meetups. A user should only be able to edit and delete meetups they created themselves.
 
 Technologies used include:
